@@ -1,1 +1,24 @@
-hi
+<h1>Your bands!</h1>
+<% cu_bands = current_user.bands %>
+<% unless cu_bands.empty? %>
+  <ul>
+  <% cu_bands.each do |band| %>
+    <li><a href="<%= band_url(band.name) %>"><%= band.name %></a></li>
+  <% end %>
+  </ul>
+<% else %>
+  You have no bands yet...
+  <br>
+<% end %>
+<br>
+<a href="<%= new_band_url %>">Create new band!</a>
+<br><br><br>
+Other bands!
+<br>
+<ul>
+<% Band.all.each do |band| %>
+  <% unless cu_bands.include?(band) %>
+    <li><a href="<%= band_url(band.name) %>"><%= band.name %></a></li>
+  <% end %>
+<% end %>
+</ul>

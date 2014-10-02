@@ -18,14 +18,20 @@
       <input type="hidden" name="_method" value="delete">
       <input type="hidden"
              name="authenticity_token"
-             value="form_authenticity_token">
+             value="<%= form_authenticity_token %>">
 
       <input type="submit" value="Logout">
     </form>
+    <br>
   <% end %>
   <%= flash[:errors] %>
+  <br><br>
 
-<%= yield %>
+  <% if logged_in? && !(request.original_url == users_url) %>
+    <a href="<%= users_url %>">Back to main page</a>
+    <br><br>
+  <% end %>
 
+  <%= yield %>
 </body>
 </html>

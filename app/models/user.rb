@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   validates :email, :session_token, uniqueness: true
   validates :password, length: { minimum: 6 }
 
+  has_many :bands, inverse_of: :user, dependent: :destroy
+  has_many :notes, inverse_of: :user, dependent: :destroy
+
 
   def self.find_by_credentials(user_params)
     user = User.find_by(email: user_params[:email])

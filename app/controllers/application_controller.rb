@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  helper_method :logged_in?
+  def login
+    redirect_to new_session_url unless logged_in?
+  end
+
+  helper_method :logged_in?, :current_user
 
 end

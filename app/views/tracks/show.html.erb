@@ -1,0 +1,33 @@
+<h1><%= @track.name %></h1>
+<h2>Lyrics</h2>
+<% @track.lyrics.split("\r").each do |row| %>
+♫ <%= row %><br>
+<% end %>
+<br>
+<a href="<%= band_album_url(band_id: params[:band_id], id: params[:album_id]) %>">Back to <%= params[:album_id] %> album</a>
+
+<br><br>
+<% track_notes = @track.notes %>
+<% if track_notes.empty? %>
+  There are no comments for this track yet...
+<% else %>
+  <% @track.notes.each do |note| %>
+    <% user_name = User.find(note.user_id).email %>
+    <br><%= user_name %> says:<br>
+    <% note.body.split("\r").each do |row| %>
+      &nbsp&nbsp&nbsp&nbsp<%= row %><br>
+    <% end %>
+  <% end %>
+<% end %>
+
+<br><br><br>
+<form action="<%= band_album_track_notes_url(track_id: params[:id]) %>" method="POST">
+  <input type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>">
+
+  <label for="notes">Leave a comment?</label><br>
+  <textarea name="note[body]" id="notes"></textarea>
+  <br>
+  <input type="submit" value="Comment">
+</form>

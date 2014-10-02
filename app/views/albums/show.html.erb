@@ -1,0 +1,23 @@
+<h1><%= @album.name %></h1>
+<h2>Tracks</h2>
+<% album_tracks = @album.tracks %>
+<% if album_tracks.empty? %>
+  <%= @album.name %> has no tracks yet...
+<% else %>
+  <ul>
+  <% album_tracks.each do |track| %>
+    <li><a href="<%= band_album_track_url({band_id: params[:band_id],album_id: params[:id],id: track.name}) %>"
+                                       ><%= track.name %></a></li>
+  <% end %>
+  </ul>
+<% end %>
+<% if current_user.id == @album.user.id %>
+  <br><br>
+  <a href="<%= new_band_album_track_url({band_id: params[:band_id],
+                                         album_id: params[:id]}) %>"
+                                         >Create new track!</a>
+  <br><br>
+  <a href="<%= album_url(band_id: params[:band_id]) %>" data-method="delete">Delete Album</a>
+  <br><br>
+<% end %>
+<a href="<%= band_url(params[:band_id]) %>">Back to <%= params[:band_id] %> band</a>

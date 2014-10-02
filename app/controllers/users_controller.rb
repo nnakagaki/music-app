@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :login, except: [:new, :create]
 
   def new
     render :new
