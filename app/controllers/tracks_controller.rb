@@ -1,5 +1,5 @@
 class TracksController < ApplicationController
-  before_action :login
+  before_action :login, :band_update, :album_update
 
   def new
     render :new
@@ -18,17 +18,13 @@ class TracksController < ApplicationController
   end
 
   def show
-    band_id = Band.find_by(name: params[:band_id]).id
-    album_id = Album.find_by(name: params[:album_id], band_id: band_id).id
-    @track = Track.find_by(name: params[:id], album_id: album_id)
+    @track = Track.find_by(name: params[:id], album_id: cookies[:album_id])
     render :show
   end
 
   private
   def track_params
     track_params = params.require(:track).permit(:name, :lyrics, :track_type)
-    band_id = Band.find_by(name: params[:band]).id
-    album_id = Album.find_by(name: params[:album], band_id: band_id).id
-    track_params.merge({album_id: album_id})
+    track_params.merge({album_id: cookies[:album_id]})
   end
 end

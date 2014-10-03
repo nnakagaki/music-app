@@ -1,6 +1,6 @@
-<h1>New Album for <%= @band.name %></h1>
+<h1>New Album for <%= @band_name %></h1>
 <br>
-<form action="<%= albums_url(band_name: @band.name) %>" method="POST">
+<form action="<%= albums_url(band_id: @band_name) %>" method="POST">
   <input type="hidden"
          name="authenticity_token"
          value="<%= form_authenticity_token %>">
